@@ -1,0 +1,240 @@
+{
+  "meta": {
+    "name": "NevaGate Design DNA",
+    "description": "Design tokens and style extracted from nevagate.anext.dev — dark, tech-forward AI SaaS landing page.",
+    "source_references": ["https://nevagate.anext.dev/"],
+    "created_at": "2026-08-23T12:10:00+08:00"
+  },
+  "design_system": {
+    "color": {
+      "palette_type": "analogous with monochromatic blue",
+      "primary": { "hex": "#3D7FFF", "role": "brand, CTAs, highlights" },
+      "secondary": { "hex": "#7FAEFF", "role": "accents, gradients" },
+      "accent": { "hex": "#5C97FF", "role": "secondary CTAs, hover states" },
+      "neutral": {
+        "scale": ["#06070A", "#0A0C11", "#0D0F16", "#12141C", "#1C2130", "#2A3247", "#4D5568", "#8B93A7", "#F3F5FA"],
+        "usage": "backgrounds (dark), text (light to muted)"
+      },
+      "semantic": {
+        "success": "#3D7FFF",
+        "warning": "#7FAEFF",
+        "error": "#FF6B6B",
+        "info": "#5C97FF"
+      },
+      "surface": {
+        "background": "#06070A",
+        "card": "#0D0F16",
+        "elevated": "#12141C"
+      },
+      "contrast_strategy": "high contrast (dark bg, light text) with blue accents for emphasis"
+    },
+    "typography": {
+      "type_scale": {
+        "display": { "size": "4rem", "weight": "800", "line_height": "1.1", "tracking": "-0.02em" },
+        "heading_1": { "size": "2.5rem", "weight": "700", "line_height": "1.2", "tracking": "-0.01em" },
+        "heading_2": { "size": "2rem", "weight": "600", "line_height": "1.3", "tracking": "-0.01em" },
+        "heading_3": { "size": "1.5rem", "weight": "600", "line_height": "1.4", "tracking": "0" },
+        "body": { "size": "1rem", "weight": "400", "line_height": "1.6", "tracking": "0" },
+        "body_small": { "size": "0.875rem", "weight": "400", "line_height": "1.5", "tracking": "0" },
+        "caption": { "size": "0.75rem", "weight": "500", "line_height": "1.4", "tracking": "0.02em" },
+        "overline": { "size": "0.7rem", "weight": "600", "line_height": "1.3", "tracking": "0.1em" }
+      },
+      "font_families": {
+        "heading": "'Plus Jakarta Sans', sans-serif",
+        "body": "'Plus Jakarta Sans', sans-serif",
+        "mono": "monospace"
+      },
+      "font_style_notes": "Single typeface used across all weights; hierarchy driven by weight, size, and tracking."
+    },
+    "spacing": {
+      "base_unit": "4px",
+      "scale": [0, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96],
+      "content_density": "comfortable",
+      "section_rhythm": "large gaps between sections (80–120px), consistent internal padding (24–32px)"
+    },
+    "layout": {
+      "grid_system": "12-column flex/grid with container max-width ~1280px",
+      "max_content_width": "1280px",
+      "columns": 12,
+      "gutter": "24px",
+      "breakpoints": {
+        "sm": "640px",
+        "md": "768px",
+        "lg": "1024px",
+        "xl": "1280px",
+        "2xl": "1536px"
+      },
+      "alignment_tendency": "centered with asymmetric accents (e.g., sweep text, angled corners)"
+    },
+    "shape": {
+      "border_radius": {
+        "small": "0px",
+        "medium": "4px",
+        "large": "8px",
+        "pill": "999px"
+      },
+      "border_usage": "thin, semi-transparent lines (surface-line: #FFFFFF1F) used sparingly",
+      "divider_style": "trace-line (gradient horizontal line)"
+    },
+    "elevation": {
+      "shadow_style": "none; depth achieved via glassmorphism (backdrop blur) and layered backgrounds",
+      "levels": {
+        "low": "backdrop-blur: 8px, bg: surface-card",
+        "medium": "backdrop-blur: 16px, bg: surface-raised",
+        "high": "pulse-ring glow effect"
+      },
+      "depth_cues": "backdrop blur, overlapping layers, subtle gradient borders"
+    },
+    "iconography": {
+      "style": "minimal, outline, consistent stroke width",
+      "stroke_weight": "2px",
+      "size_scale": "16px, 20px, 24px",
+      "preferred_set": "Lucide or Heroicons (inferred from common usage)"
+    },
+    "motion": {
+      "easing": "cubic-bezier(0.19, 1, 0.22, 1)",
+      "duration_scale": {
+        "micro": "150ms",
+        "normal": "300ms",
+        "macro": "700ms"
+      },
+      "entrance_pattern": "fade-up with stagger (reveal class)",
+      "exit_pattern": "fade-out (not observed)",
+      "philosophy": "smooth, purposeful; animations enhance hierarchy without distraction"
+    },
+    "components": {
+      "button_style": "solid blue with glass backdrop; hover: scale or glow",
+      "input_style": "dark background with subtle border, focus: blue ring",
+      "card_style": "glassmorphic (backdrop blur) with notch clip-path",
+      "navigation_pattern": "sticky top, glass background, minimal",
+      "modal_style": "notch glass",
+      "list_style": "minimal, with dot grid background",
+      "component_notes": "Angled corners (notch) used as a signature shape across cards, panels, and containers."
+    }
+  },
+  "design_style": {
+    "aesthetic": {
+      "mood": ["futuristic", "professional", "clean", "tech-driven", "confident"],
+      "visual_metaphor": "high-tech, AI/API gateway, precision",
+      "era_influence": "modern dark UI (2020s) with glassmorphism and micro-interactions",
+      "genre": "SaaS, AI product landing page",
+      "personality_traits": ["cutting-edge", "trustworthy", "approachable", "efficient"],
+      "adjectives": ["sleek", "immersive", "calm", "precise"]
+    },
+    "visual_language": {
+      "complexity": "moderate",
+      "ornamentation": "subtle (gradient text, dot grid, notch corners)",
+      "whitespace_usage": "generous, helps readability and focus",
+      "visual_weight_distribution": "balanced; hero area heavier, sections spaced evenly",
+      "focal_strategy": "single hero element (headline with animated text) plus supporting cards",
+      "contrast_level": "high (dark background, light text, blue highlights)",
+      "texture_usage": "dot-grid background, subtle scan line animation (scan keyframe)"
+    },
+    "composition": {
+      "hierarchy_method": "scale contrast (large display headline) + spatial isolation",
+      "balance_type": "asymmetric (notch corners, sweep text, but overall centered)",
+      "flow_direction": "vertical scrolling, left-to-right in marquee",
+      "grouping_strategy": "card-based sections with consistent spacing",
+      "negative_space_role": "defines breathing room, separates content clusters"
+    },
+    "imagery": {
+      "photo_treatment": "none; mostly abstract/geometric",
+      "illustration_style": "none; relies on typography and subtle gradients",
+      "graphic_elements": "dot grid, trace lines, notch shapes",
+      "pattern_usage": "dot-grid background (radial gradient) and marquee logos",
+      "image_shape": "rounded/notch corners for any container"
+    },
+    "interaction_feel": {
+      "feedback_style": "instant, with subtle transition (scale, opacity, blur)",
+      "hover_behavior": "scale, color shift, or glow (pulse-ring)",
+      "transition_personality": "smooth and deliberate, not bouncy",
+      "loading_style": "not observed (static page)",
+      "microinteraction_density": "low; purposeful micro-interactions (caret blink, sweep text, reveal)"
+    },
+    "brand_voice_in_ui": {
+      "tone": "confident, informative, slightly technical",
+      "formality": "semi-formal",
+      "cta_style": "direct imperative ('Get Started', 'Build More, Spend Less')",
+      "empty_state_approach": "not applicable",
+      "error_tone": "not observed"
+    }
+  },
+  "visual_effects": {
+    "overview": {
+      "effect_intensity": "moderate",
+      "performance_tier": "medium",
+      "fallback_strategy": "reduce animations to opacity-only (prefers-reduced-motion)",
+      "primary_technology": "CSS (Tailwind, keyframes) + IntersectionObserver"
+    },
+    "background_effects": {
+      "type": "dot-grid, gradient sweep",
+      "description": "Subtle dot-grid pattern overlay; text-sweep gradient animation on headline",
+      "technology": "CSS radial-gradient + @keyframes sweep",
+      "params": {
+        "color_palette": ["#06070A", "#3D7FFF", "#7FAEFF"],
+        "speed": "7s",
+        "density": "30px spacing",
+        "opacity": "0.16",
+        "blend_mode": "normal"
+      }
+    },
+    "particle_systems": {
+      "enabled": false
+    },
+    "3d_elements": {
+      "enabled": false
+    },
+    "shader_effects": {
+      "enabled": false
+    },
+    "scroll_effects": {
+      "parallax": {
+        "enabled": false
+      },
+      "scroll_triggered_animations": {
+        "enabled": true,
+        "trigger_points": "sections via IntersectionObserver",
+        "animation_type": "fade-up (translateY + opacity)",
+        "scrub_behavior": "once on entry"
+      },
+      "scroll_morphing": {
+        "enabled": false
+      }
+    },
+    "text_effects": {
+      "type": "gradient sweep on headline, caret blink",
+      "description": "Animated gradient background on text; blinking cursor-like caret",
+      "technology": "CSS background-clip + @keyframes sweep, @keyframes caret-blink",
+      "params": {
+        "split_strategy": "whole text",
+        "animation_per_unit": "sweep across entire text",
+        "stagger": "none",
+        "effect_style": "gradient movement"
+      }
+    },
+    "cursor_effects": {
+      "enabled": false
+    },
+    "image_effects": {
+      "type": "none"
+    },
+    "glassmorphism_neumorphism": {
+      "enabled": true,
+      "style": "glass (frosted)",
+      "params": {
+        "blur_radius": "16px",
+        "transparency": "65%",
+        "border_treatment": "semi-transparent border (surface-line)",
+        "shadow_type": "none",
+        "light_source_angle": "top-left"
+      }
+    },
+    "canvas_drawings": {
+      "enabled": false
+    },
+    "svg_animations": {
+      "enabled": false
+    },
+    "composite_notes": "The design uses a cohesive set of visual motifs: notch clip-path for containers, glassmorphism, dot-grid background, and animated sweep gradients. Motion is used sparingly but effectively to draw attention and guide flow."
+  }
+}
