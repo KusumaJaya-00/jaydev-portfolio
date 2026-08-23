@@ -11,8 +11,7 @@ export function ProjectsGrid({ projects }: { projects: Project[] }) {
         <motion.div
           key={project.id}
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: i * 0.08 }}
         >
           <ProjectCard project={project} />

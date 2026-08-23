@@ -15,6 +15,7 @@ export function ContactForm() {
     e.preventDefault()
     setLoading(true)
     setError('')
+    setSuccess(false)
     const formData = new FormData(e.currentTarget)
     // Kirim ke supabase via API route atau langsung
     try {
@@ -23,13 +24,16 @@ export function ContactForm() {
         body: formData,
       })
       if (res.ok) {
+        setError('')
         setSuccess(true)
         e.currentTarget.reset()
       } else {
-        const data = await res.json()
-        setError(data.error || 'Something went wrong')
+        setSuccess(false)
+        const data = await res.json().catch(() => ({}))
+        setError((data as { error?: string }).error || 'Something went wrong')
       }
     } catch {
+      setSuccess(false)
       setError('Network error')
     } finally {
       setLoading(false)

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
+import { LogoIcon } from '@/components/ui/LogoIcon'
 
 const quickLinks = [
   { href: '/projects', label: 'Projects' },
@@ -10,7 +11,7 @@ const quickLinks = [
 const socials = [
   { href: 'https://github.com', label: 'GitHub' },
   { href: 'https://linkedin.com', label: 'LinkedIn' },
-  { href: 'mailto:hello@example.com', label: 'Email' },
+  { href: 'mailto:officialkusjay@gmail.com', label: 'Email' },
 ]
 
 export function Footer() {
@@ -19,8 +20,9 @@ export function Footer() {
       <div className="container mx-auto px-4 md:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
           <div className="md:col-span-6">
-            <Link href="/" className="font-mono text-xl font-bold text-primary">
-              jaydev
+            <Link href="/" className="inline-flex items-center gap-2.5 font-mono text-xl font-bold text-primary">
+              <LogoIcon variant="minimal" size={26} />
+              <span>jaydev</span>
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
               Full-Stack Developer building modern web applications.
@@ -65,8 +67,8 @@ export function Footer() {
               Contact
             </h3>
             <ul className="space-y-2.5 text-sm text-muted-foreground">
-              <li>hello@example.com</li>
-              <li>Jakarta, Indonesia</li>
+              <li>officialkusjay@gmail.com</li>
+              <li>Bali, Indonesia</li>
             </ul>
           </div>
         </div>

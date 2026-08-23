@@ -3,7 +3,7 @@ import { ArrowUpRight } from 'lucide-react'
 const LINKS = [
   { href: 'https://github.com', label: 'GitHub', external: true },
   { href: 'https://linkedin.com', label: 'LinkedIn', external: true },
-  { href: 'mailto:hello@example.com', label: 'Email', external: false },
+  { href: 'mailto:officialkusjay@gmail.com', label: 'Email', external: false },
 ]
 
 export function SocialLinks() {

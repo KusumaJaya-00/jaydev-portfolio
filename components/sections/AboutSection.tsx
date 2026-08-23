@@ -54,7 +54,7 @@ export function AboutSection() {
               </div>
               <h3 className="text-lg font-semibold mb-2.5">Who I am</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                I&apos;m Jay, a web developer from Indonesia. I build things end to end, from the database to the interface people use. Recent work includes a management platform for my university organization and this portfolio.
+                I&apos;m Kusuma Jaya, or you can call me Kusjay. I&apos;m a web developer from Indonesia. I build things end to end, from the database to the interface people use. Recent work includes a management platform for my university organization and this portfolio.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 I use AI tools like Hermes, OpenCode, and Antigravity every day. They speed up the repetitive work, while I stay responsible for the plan and the final result.

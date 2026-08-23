@@ -58,15 +58,18 @@ export async function getProjects(limit?: number): Promise<Project[]> {
   return data || []
 }
 
-export async function getFeaturedProjects(limit: number = 3): Promise<Project[]> {
+export async function getFeaturedProjects(limit?: number): Promise<Project[]> {
   const supabase = await createSupabaseServerClient()
-  const { data, error } = await supabase
+  let query = supabase
     .from('projects')
     .select('*')
     .eq('status', 'published')
     .eq('is_featured', true)
     .order('sort_order', { ascending: true })
-    .limit(limit)
+
+  if (limit) query = query.limit(limit)
+
+  const { data, error } = await query
 
   if (error) {
     console.error('Error fetching featured projects:', error)

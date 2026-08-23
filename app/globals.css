@@ -118,6 +118,10 @@
   background-clip: text;
   color: transparent;
   animation: sweep 7s ease-in-out infinite;
+  /* Ruang untuk descender (y, g, j, p) agar tidak terpotong oleh kotak gradien;
+     margin negatif mengompensasi agar layout tidak bergeser */
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
 }
 @keyframes sweep {
   0% { background-position: 0% 50%; }
@@ -147,13 +151,14 @@
   50% { transform: translateY(-10px); }
 }
 
-/* Tech stack marquee */
+/* Tech stack marquee — seamless: track width ~4×, translate -50% keeps midpoint in view */
 .marquee-wrap {
   display: flex;
   width: max-content;
+  will-change: transform;
 }
 .animate-marquee {
-  animation: marquee 30s linear infinite;
+  animation: marquee 45s linear infinite;
 }
 @keyframes marquee {
   from { transform: translateX(0); }

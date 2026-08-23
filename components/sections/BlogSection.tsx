@@ -1,11 +1,11 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { PostCard } from '@/components/blog/PostCard'
 import { Post } from '@/lib/supabase/queries'
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
 
 interface BlogSectionProps {
   posts: Post[]
@@ -13,6 +13,14 @@ interface BlogSectionProps {
 
 export function BlogSection({ posts }: BlogSectionProps) {
   if (!posts.length) return null
+  const scrollerRef = useRef<HTMLDivElement>(null)
+
+  const scrollBy = (dir: 1 | -1) => {
+    const el = scrollerRef.current
+    if (!el) return
+    const cardW = el.firstElementChild?.clientWidth ?? 340
+    el.scrollBy({ left: dir * (cardW + 24), behavior: 'smooth' })
+  }
 
   return (
     <section className="py-16 md:py-24">
@@ -21,24 +29,50 @@ export function BlogSection({ posts }: BlogSectionProps) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex justify-between items-center mb-12"
+          className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8"
         >
           <div>
             <h2 className="text-3xl md:text-4xl font-bold mb-2">Latest Blog Posts</h2>
             <p className="text-muted-foreground">Thoughts and tutorials</p>
           </div>
-          <Link href="/blog" className="shrink-0 px-5 py-2.5 notch-sm border border-border text-sm font-semibold text-foreground hover:border-primary/50 hover:bg-card/60 transition-all duration-300">
-            View All
-          </Link>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              aria-label="Previous"
+              onClick={() => scrollBy(-1)}
+              className="notch-sm inline-flex size-9 items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+            >
+              <ChevronLeft className="size-4" />
+            </button>
+            <button
+              type="button"
+              aria-label="Next"
+              onClick={() => scrollBy(1)}
+              className="notch-sm inline-flex size-9 items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+            >
+              <ChevronRight className="size-4" />
+            </button>
+            <Link
+              href="/blog"
+              className="ml-1 px-5 py-2.5 notch-sm border border-border text-sm font-semibold text-foreground hover:border-primary/50 hover:bg-card/60 transition-all duration-300"
+            >
+              View All
+            </Link>
+          </div>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div
+          ref={scrollerRef}
+          className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-3 pb-4 -mt-3 -mx-4 px-4 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
           {posts.map((post, i) => (
             <motion.div
               key={post.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.06 }}
+              className="snap-start shrink-0 basis-[85%] sm:basis-[calc(50%-12px)] lg:basis-[calc(33.333%-16px)]"
             >
               <PostCard post={post} />
             </motion.div>

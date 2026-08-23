@@ -18,10 +18,10 @@ export function ContactInfo() {
       <div>
         <p className="font-mono text-xs text-muted-foreground mb-1.5">$ email</p>
         <a
-          href="mailto:hello@example.com"
+          href="mailto:officialkusjay@gmail.com"
           className="text-lg font-semibold text-foreground hover:text-secondary transition-colors"
         >
-          hello@example.com
+          officialkusjay@gmail.com
         </a>
       </div>
 

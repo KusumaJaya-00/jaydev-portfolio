@@ -10,7 +10,7 @@ import { ContactSection } from '@/components/sections/ContactSection'
 
 export default async function HomePage() {
   const [projects, posts] = await Promise.all([
-    getFeaturedProjects(3),
+    getFeaturedProjects(),
     getPosts(3),
   ])
 

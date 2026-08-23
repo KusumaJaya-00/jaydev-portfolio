@@ -29,7 +29,7 @@ export default async function AdminProjectsPage() {
               <TableHead>Title</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead>Featured</TableHead>
+              <TableHead>Homepage</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -42,7 +42,13 @@ export default async function AdminProjectsPage() {
                   <TableCell className="font-medium">{project.title}</TableCell>
                   <TableCell><Badge variant="secondary" className="badge-notch capitalize">{project.category || 'Uncategorized'}</Badge></TableCell>
                   <TableCell><Badge variant={project.status === 'published' ? 'default' : 'outline'} className="badge-notch">{project.status || 'draft'}</Badge></TableCell>
-                  <TableCell>{project.is_featured ? '⭐' : ''}</TableCell>
+                  <TableCell>
+                    {project.is_featured ? (
+                      <Badge variant="default" className="badge-notch">Shown</Badge>
+                    ) : (
+                      <Badge variant="outline" className="badge-notch text-muted-foreground">Hidden</Badge>
+                    )}
+                  </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
                       <Link href={`/projects/${project.slug}`} target="_blank" className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}><Eye className="h-4 w-4" /></Link>

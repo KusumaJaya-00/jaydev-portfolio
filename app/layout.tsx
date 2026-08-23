@@ -20,16 +20,16 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://jaydev.my.id'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Kusjay | Full-Stack Developer',
-    template: '%s | Kusjay',
+    default: 'Jaydev',
+    template: '%s | Jaydev',
   },
-  description: 'Kusjay — Full-Stack Developer specializing in modern web applications. View my projects, blog posts, and get in touch.',
+  description: 'Jaydev — Full-Stack Developer specializing in modern web applications. View my projects, blog posts, and get in touch.',
   keywords: ['full-stack developer', 'web developer', 'portfolio', 'next.js', 'react'],
-  authors: [{ name: 'Kusjay' }],
+  authors: [{ name: 'Jaydev' }],
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    siteName: 'Kusjay Portfolio',
+    siteName: 'Jaydev',
     description: 'Full-Stack Developer specializing in modern web applications.',
   },
   twitter: {
@@ -38,6 +38,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+  },
+  icons: {
+    icon: [
+      { url: '/logo-jaydev.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/logo-jaydev.svg',
+    apple: '/logo-jaydev.svg',
   },
 }
 

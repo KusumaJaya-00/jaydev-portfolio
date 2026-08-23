@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { BackLink } from '@/components/layout/BackLink'
 import { renderMarkdown } from '@/lib/markdown'
 import { PublicShell } from '@/components/layout/PublicShell'
+import { InquiryCta } from '@/components/layout/InquiryCta'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -64,6 +65,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
           dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
         />
         </div>
+        <InquiryCta />
       </article>
     </PublicShell>
   )

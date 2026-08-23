@@ -101,14 +101,18 @@ export default async function AdminDashboard() {
           <ul className="divide-y divide-border">
             {recent.map((msg) => (
               <li key={msg.id} className="py-3 flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <p className="text-sm font-medium truncate">
+                <Link
+                  href="/admin/messages"
+                  className="min-w-0 flex-1 group/msg"
+                  title="Buka di Messages"
+                >
+                  <p className="text-sm font-medium truncate group-hover/msg:text-primary transition-colors">
                     {!msg.is_read && <span className="inline-block h-2 w-2 rounded-full bg-primary mr-2 align-middle" />}
                     {msg.name} — {msg.subject || '(no subject)'}
                   </p>
                   <p className="text-sm text-muted-foreground truncate">{msg.message}</p>
-                </div>
-                <span className="text-xs text-muted-foreground whitespace-nowrap">
+                </Link>
+                <span className="text-xs text-muted-foreground whitespace-nowrap pt-0.5">
                   {new Date(msg.created_at).toLocaleDateString()}
                 </span>
               </li>

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { LogoIcon } from '@/components/ui/LogoIcon'
 import { supabase } from '@/lib/supabase/client'
 import { Menu, X } from 'lucide-react'
 
@@ -19,6 +20,15 @@ export function Navbar() {
     { href: '/blog', label: 'Blog' },
     { href: '/contact', label: 'Contact' },
   ]
+
+  // Klik link nav saat sudah berada di halaman itu -> scroll ke atas
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    if (pathname === href) {
+      e.preventDefault()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      setOpen(false)
+    }
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -51,8 +61,13 @@ export function Navbar() {
     >
       <nav className="container mx-auto px-4 md:px-8 h-16 flex items-center">
         <div className="flex-1">
-          <Link href="/" className="font-mono text-xl font-bold text-primary" onClick={() => setOpen(false)}>
-            jaydev
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-2.5 font-mono text-xl font-bold text-primary transition-opacity hover:opacity-90"
+            onClick={() => setOpen(false)}
+          >
+            <LogoIcon variant="minimal" size={28} className="transition-transform duration-300 group-hover:scale-105" />
+            <span>jaydev</span>
           </Link>
         </div>
         <div className="hidden md:flex items-center gap-8">
@@ -60,6 +75,7 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               className={cn(
                 'group relative text-sm font-medium transition-colors duration-200',
                 pathname === link.href ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
@@ -107,7 +123,7 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              onClick={() => setOpen(false)}
+              onClick={(e) => handleNavClick(e, link.href)}
               className={cn(
                 'block px-3 py-2 rounded-lg text-sm transition-colors',
                 pathname === link.href

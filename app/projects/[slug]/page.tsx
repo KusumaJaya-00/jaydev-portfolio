@@ -6,6 +6,7 @@ import EmptyState from '@/components/layout/EmptyState'
 import { BackLink } from '@/components/layout/BackLink'
 import { renderMarkdown } from '@/lib/markdown'
 import { PublicShell } from '@/components/layout/PublicShell'
+import { InquiryCta } from '@/components/layout/InquiryCta'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -26,6 +27,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   const { slug } = await params
   const project = await getProjectBySlug(slug)
   if (!project) notFound()
+  const hasLinks = !!(project.live_url || project.github_url)
 
   return (
     <PublicShell>
@@ -45,9 +47,15 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           ))}
         </div>
 
-        {project.featured_image && (
+        {project.featured_image ? (
           <img
             src={project.featured_image}
+            alt={project.title}
+            className="notch-sm w-full h-auto mb-8"
+          />
+        ) : (
+          <img
+            src="/images/placeholder-generic.webp"
             alt={project.title}
             className="notch-sm w-full h-auto mb-8"
           />
@@ -64,7 +72,32 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             description="This project doesn't have a write-up yet."
           />
         )}
+        {hasLinks && (
+          <div className="mt-8 flex flex-wrap gap-3">
+            {project.live_url && (
+              <a
+                href={project.live_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 notch-sm bg-primary hover:bg-secondary text-primary-foreground font-semibold px-6 py-2.5 transition-colors"
+              >
+                Live demo
+              </a>
+            )}
+            {project.github_url && (
+              <a
+                href={project.github_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center notch-sm border border-border px-6 py-2.5 text-sm font-semibold text-foreground hover:border-primary/50 hover:bg-card/60 transition-colors"
+              >
+                GitHub
+              </a>
+            )}
+          </div>
+        )}
       </div>
+        <InquiryCta />
       </article>
     </PublicShell>
   )

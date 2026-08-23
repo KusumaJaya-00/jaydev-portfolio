@@ -1,36 +1,28 @@
 # PROJECT_STRUCTURE.md
-# Complete Project Structure
+# Complete Project Structure (actual)
 
 ## 📁 Root Structure
 
 ```
 portfolio/
 │
-├── 📄 PRD.md                    # Product Requirements Document
-├── 📄 AGENTS.md                 # AI Agent instructions
-├── 📄 PROJECT_STRUCTURE.md      # This file
-├── 📄 RULES.md                  # Coding rules & conventions
-├── 📄 TASKS.md                  # Task breakdown
-├── 📄 DESIGN_SYSTEM.md          # Design tokens & components
-├── 📄 API.md                    # API documentation
-├── 📄 DATABASE.md               # Database schema
-├── 📄 DEPLOYMENT.md             # Deployment guide
+├── 📄 README.md                 # Setup, fitur, ERD, struktur
+├── 📄 next.config.ts            # Next.js config
+├── 📄 tailwind — via @tailwindcss/postcss
+├── 📄 tsconfig.json
+├── 📄 postcss.config.mjs
+├── 📄 components.json           # shadcn
+├── 📄 proxy.ts                  # Auth guard: /admin/* → /login
+├── 📄 .env.local.example
+├── 📄 .env.local                # (gitignored) Supabase keys
 │
-├── 📁 app/                      # Next.js App Router
+├── 📁 app/                      # Next.js App Router (flat, no (public) group)
 ├── 📁 components/               # React components
-├── 📁 lib/                      # Utilities & configs
-├── 📁 types/                    # TypeScript types
+├── 📁 lib/                      # Utilities & Supabase
 ├── 📁 public/                   # Static assets
-├── 📁 supabase/                 # Supabase migrations
-│
-├── ⚙️ next.config.js            # Next.js config
-├── ⚙️ tailwind.config.ts        # Tailwind config
-├── ⚙️ tsconfig.json             # TypeScript config
-├── ⚙️ postcss.config.js         # PostCSS config
-├── ⚙️ .env.local                # Environment variables (NOT in git)
-├── ⚙️ .gitignore
-├── ⚙️ package.json
-└── ⚙️ README.md
+├── 📁 supabase/                 # SQL migrations & seed
+├── 📁 scripts/                  # Seeder & placeholder generator
+└── 📁 docs/                     # DATABASE, API, DEPLOYMENT, DESIGN_SYSTEM, screenshots
 ```
 
 ---
@@ -40,63 +32,55 @@ portfolio/
 ```
 app/
 │
-├── 📄 layout.tsx                # Root layout (html, body, fonts)
-├── 📄 page.tsx                  # Root redirect → /home
-├── 📄 globals.css               # Global styles + Tailwind
+├── 📄 layout.tsx                # Root layout (html, body, fonts, Toaster)
+├── 📄 page.tsx                  # Homepage (/)
+├── 📄 globals.css               # Tailwind + custom (marquee, notch, dot-grid)
+├── 📄 error.tsx / not-found.tsx / robots.ts / sitemap.ts
+├── 📄 favicon.ico / icon.png / icon.svg / apple-icon.png
 │
-├── 📁 (public)/                 # Route group (no /public prefix)
-│   ├── 📄 layout.tsx            # Public layout (Navbar + Footer)
-│   │
-│   ├── 📄 page.tsx              # Homepage (/)
-│   │
-│   ├── 📁 projects/
-│   │   ├── 📄 page.tsx          # Projects listing (/projects)
-│   │   └── 📁 [slug]/
-│   │       └── 📄 page.tsx      # Project detail (/projects/xyz)
-│   │
-│   ├── 📁 blog/
-│   │   ├── 📄 page.tsx          # Blog listing (/blog)
-│   │   └── 📁 [slug]/
-│   │       └── 📄 page.tsx      # Blog post (/blog/xyz)
-│   │
-│   └── 📁 contact/
-│       └── 📄 page.tsx          # Contact page (/contact)
+├── 📁 projects/
+│   ├── 📄 page.tsx              # Projects listing (/projects)
+│   ├── 📄 loading.tsx
+│   └── 📁 [slug]/
+│       └── 📄 page.tsx          # Project detail (/projects/:slug)
 │
-├── 📁 admin/                    # Admin dashboard
-│   ├── 📄 layout.tsx            # Admin layout (sidebar + header)
+├── 📁 blog/
+│   ├── 📄 page.tsx              # Blog listing (/blog)
+│   ├── 📄 loading.tsx
+│   └── 📁 [slug]/
+│       └── 📄 page.tsx          # Blog detail (/blog/:slug)
+│
+├── 📁 contact/
+│   └── 📄 page.tsx              # Contact page (/contact)
+│
+├── 📁 login/
+│   └── 📄 page.tsx              # Login admin (/login) — standalone, no shell
+│
+├── 📁 admin/                    # Admin area (guard via proxy.ts)
+│   ├── 📄 layout.tsx            # Admin shell: collapsible sidebar + header
 │   ├── 📄 page.tsx              # Dashboard (/admin)
-│   │
-│   ├── 📁 login/
-│   │   └── 📄 page.tsx          # Login page (/login)
-│   │
 │   ├── 📁 projects/
-│   │   ├── 📄 page.tsx          # Projects list (/admin/projects)
-│   │   ├── 📁 new/
-│   │   │   └── 📄 page.tsx      # Create project
+│   │   ├── 📄 page.tsx          # List (/admin/projects)
+│   │   ├── 📁 new/page.tsx      # Create
 │   │   └── 📁 [id]/
-│   │       └── 📄 page.tsx      # Edit project
-│   │
+│   │       ├── 📁 edit/page.tsx
+│   │       └── 📁 delete/page.tsx
 │   ├── 📁 blog/
-│   │   ├── 📄 page.tsx          # Blog list (/admin/blog)
-│   │   ├── 📁 new/
-│   │   │   └── 📄 page.tsx      # Create post
+│   │   ├── 📄 page.tsx          # List (/admin/blog)
+│   │   ├── 📁 new/page.tsx
 │   │   └── 📁 [id]/
-│   │       └── 📄 page.tsx      # Edit post
-│   │
-│   ├── 📁 messages/
-│   │   └── 📄 page.tsx          # Messages (/admin/messages)
-│   │
-│   └── 📁 settings/
-│       └── 📄 page.tsx          # Settings (/admin/settings)
+│   │       ├── 📁 edit/page.tsx
+│   │       └── 📁 delete/page.tsx
+│   └── 📁 messages/
+│       └── 📄 page.tsx          # Inbox (/admin/messages)
 │
-└── 📁 api/                      # API Routes (if needed)
-    ├── 📁 projects/
-    │   └── 📄 route.ts          # GET/POST /api/projects
-    ├── 📁 posts/
-    │   └── 📄 route.ts          # GET/POST /api/posts
-    └── 📁 contact/
-        └── 📄 route.ts          # POST /api/contact
+└── 📁 api/
+    ├── 📁 contact/route.ts      # POST /api/contact (public)
+    └── 📁 messages/read/route.ts # POST /api/messages/read (auth)
 ```
+
+> Publik pakai `components/layout/PublicShell.tsx` per halaman (bukan route group `(public)`).
+> `app/login` tidak dibungkus shell publik — halaman polos.
 
 ---
 
@@ -105,113 +89,60 @@ app/
 ```
 components/
 │
-├── 📁 ui/                       # shadcn/ui components (DO NOT MODIFY)
-│   ├── 📄 button.tsx
-│   ├── 📄 card.tsx
-│   ├── 📄 input.tsx
-│   ├── 📄 textarea.tsx
-│   ├── 📄 select.tsx
-│   ├── 📄 dialog.tsx
-│   ├── 📄 dropdown-menu.tsx
-│   ├── 📄 toast.tsx
-│   ├── 📄 table.tsx
-│   ├── 📄 badge.tsx
-│   ├── 📄 separator.tsx
-│   ├── 📄 skeleton.tsx
-│   └── 📄 sheet.tsx
+├── 📁 ui/                       # shadcn-style primitives
+│   ├── 📄 badge.tsx / button.tsx / card.tsx
+│   ├── 📄 input.tsx / textarea.tsx / label.tsx / switch.tsx
+│   ├── 📄 table.tsx / toast.tsx
+│   └── 📄 LogoIcon.tsx
 │
-├── 📁 layout/                   # Layout components
-│   ├── 📄 Navbar.tsx            # Main navigation
-│   ├── 📄 MobileNav.tsx         # Mobile navigation
-│   ├── 📄 Footer.tsx            # Footer
-│   ├── 📄 AdminSidebar.tsx      # Admin sidebar
-│   ├── 📄 AdminHeader.tsx       # Admin header
-│   └── 📄 PageHeader.tsx        # Reusable page header
+├── 📁 layout/
+│   ├── 📄 Navbar.tsx            # Top nav (public, auth-aware Sign in ↔ Dashboard)
+│   ├── 📄 Footer.tsx
+│   ├── 📄 PublicShell.tsx       # Navbar + main + Footer wrapper (dipakai page publik)
+│   ├── 📄 PageHeader.tsx / BackLink.tsx / EmptyState.tsx
+│   ├── 📄 CursorGlow.tsx / InquiryCta.tsx
+│   └── 📄 (admin layout ada di app/admin/layout.tsx)
 │
 ├── 📁 sections/                 # Homepage sections
-│   ├── 📄 HeroSection.tsx       # Hero with cursor effect
-│   ├── 📄 AboutSection.tsx      # About me
-│   ├── 📄 SkillsSection.tsx     # Skills display
-│   ├── 📄 ProjectsSection.tsx   # Featured projects
-│   ├── 📄 BlogSection.tsx       # Latest blog posts
-│   └── 📄 ContactSection.tsx    # Contact form
+│   ├── 📄 HeroSection.tsx       # Hero + stats + CTAs
+│   ├── 📄 AboutSection.tsx
+│   ├── 📄 TechMarqueeSection.tsx
+│   ├── 📄 ProjectsSection.tsx   # Carousel featured projects
+│   ├── 📄 BlogSection.tsx       # Carousel latest posts
+│   └── 📄 ContactSection.tsx
 │
-├── 📁 projects/                 # Project components
-│   ├── 📄 ProjectCard.tsx       # Project card for grid
-│   ├── 📄 ProjectGrid.tsx       # Projects grid with filter
-│   ├── 📄 ProjectDetail.tsx     # Full project view
-│   ├── 📄 ProjectFilter.tsx     # Filter controls
-│   └── 📄 TechStackBadge.tsx    # Tech stack pill
+├── 📁 projects/
+│   ├── 📄 ProjectCard.tsx
+│   └── 📄 ProjectsGrid.tsx
 │
-├── 📁 blog/                     # Blog components
-│   ├── 📄 PostCard.tsx          # Blog post card
-│   ├── 📄 PostGrid.tsx          # Posts grid
-│   ├── 📄 PostContent.tsx       # Rendered markdown
-│   ├── 📄 TableOfContents.tsx   # Auto-generated TOC
-│   └── 📄 RelatedPosts.tsx      # Related posts section
+├── 📁 blog/
+│   ├── 📄 PostCard.tsx
+│   └── 📄 BlogGrid.tsx
 │
-├── 📁 admin/                    # Admin components
-│   ├── 📄 StatsCard.tsx         # Dashboard stat card
-│   ├── 📄 RecentMessages.tsx    # Recent messages widget
-│   ├── 📄 ContentForm.tsx       # Reusable content form
-│   ├── 📄 DataTable.tsx         # Data table with actions
-│   ├── 📄 ImageUpload.tsx       # Image upload component
-│   ├── 📄 MarkdownEditor.tsx    # Markdown editor
-│   ├── 📄 ConfirmDialog.tsx     # Delete confirmation
-│   └── 📄 SearchInput.tsx       # Search with debounce
+├── 📁 contact/
+│   ├── 📄 ContactForm.tsx / ContactInfo.tsx / SocialLinks.tsx
 │
-├── 📁 contact/                  # Contact components
-│   ├── 📄 ContactForm.tsx       # Contact form
-│   └── 📄 SocialLinks.tsx       # Social media links
-│
-├── 📁 effects/                  # Visual effects
-│   ├── 📄 CursorGlow.tsx        # Cursor glow effect
-│   ├── 📄 ParticleBackground.tsx # Particle animation
-│   └── 📄 FadeIn.tsx            # Fade in animation wrapper
-│
-└── 📁 shared/                   # Shared/reusable components
-    ├── 📄 MarkdownRenderer.tsx  # Render markdown content
-    ├── 📄 EmptyState.tsx        # Empty state placeholder
-    ├── 📄 LoadingSpinner.tsx    # Loading indicator
-    └── 📄 ErrorBoundary.tsx     # Error boundary
+└── 📁 admin/
+    ├── 📄 RichTextEditor.tsx    # Tiptap WYSIWYG (HTML)
+    ├── 📄 MarkdownEditor.tsx    # (legacy, tetap ada)
+    ├── 📄 ImageUpload.tsx       # Supabase Storage bucket `images`
+    ├── 📄 MessagesTable.tsx / MessageModal.tsx / MessagesActions.tsx
+    └── 📄 LogoutButton.tsx
 ```
 
 ---
 
-## 📁 lib/ — Utilities & Config
+## 📁 lib/ — Utilities & Supabase
 
 ```
 lib/
 │
 ├── 📁 supabase/
-│   ├── 📄 client.ts             # Browser client (for client components)
-│   ├── 📄 server.ts             # Server client (for server components)
-│   └── 📄 middleware.ts         # Auth middleware
-│
-├── 📄 utils.ts                  # General utilities (cn, formatDate, etc.)
-├── 📄 constants.ts              # App constants (site name, links, etc.)
-├── 📄 validators.ts             # Form validation schemas (zod)
-└── 📄 hooks/
-    ├── 📄 useDebounce.ts        # Debounce hook
-    ├── 📄 useMediaQuery.ts      # Responsive hook
-    └── 📄 useToast.ts           # Toast notification hook
-```
-
----
-
-## 📁 types/ — TypeScript Types
-
-```
-types/
-│
-├── 📄 index.ts                  # Export all types
-├── 📄 project.ts                # Project types
-├── 📄 post.ts                   # Blog post types
-├── 📄 message.ts                # Message types
-├── 📄 skill.ts                  # Skill types
-├── 📄 experience.ts             # Experience types
-├── 📄 settings.ts               # Settings types
-└── 📄 supabase.ts               # Supabase generated types
+│   ├── 📄 client.ts             # Browser client (@supabase/ssr)
+│   ├── 📄 server.ts             # Server client (cookies)
+│   └── 📄 queries.ts            # Types + getProjects/getPosts/getFeatured... + submitMessage
+├── 📄 utils.ts                  # cn(), helpers
+└── 📄 markdown.ts               # renderContent(): HTML baru + markdown lama → sanitized HTML
 ```
 
 ---
@@ -222,54 +153,69 @@ types/
 public/
 │
 ├── 📁 images/
-│   ├── 📄 avatar.jpg            # Profile photo
-│   ├── 📄 og-image.jpg          # Open Graph image
-│   └── 📁 projects/             # Project screenshots
+│   ├── 📁 projects/             # (juga di Storage bucket `images`)
+│   ├── 📁 posts/
+│   ├── 📄 placeholder-generic.webp
+│   └── 📄 (generate via scripts/generate-placeholders.js)
 │
-├── 📁 icons/
-│   ├── 📄 favicon.ico
-│   ├── 📄 favicon-16x16.png
-│   ├── 📄 favicon-32x32.png
-│   └── 📄 apple-touch-icon.png
-│
-├── 📄 robots.txt
-├── 📄 sitemap.xml
-└── 📄 manifest.json
+└── 📄 robots.txt (via app/robots.ts) / sitemap.xml (via app/sitemap.ts)
 ```
 
 ---
 
-## 📁 supabase/ — Database Migrations
+## 📁 supabase/ — Database
 
 ```
 supabase/
 │
 ├── 📁 migrations/
-│   ├── 📄 20260821000000_create_projects.sql
-│   ├── 📄 20260821000001_create_posts.sql
-│   ├── 📄 20260821000002_create_messages.sql
-│   ├── 📄 20260821000003_create_settings.sql
-│   ├── 📄 20260821000004_create_skills.sql
-│   └── 📄 20260821000005_create_experience.sql
+│   └── 📄 00001_initial_schema.sql  # Semua tabel + RLS + bucket `images`
+└── 📄 seed.sql                      # Data awal (projects + posts) — idempotent
+```
+
+> Tabel: `projects | posts | messages | settings | skills | experience` — semua standalone, tanpa FK. Detail: `docs/DATABASE.md`.
+
+---
+
+## 📁 scripts/
+
+```
+scripts/
 │
-└── 📄 seed.sql                  # Initial data
+├── 📄 seed.sql                  # Copy dari supabase/seed.sql (convenience)
+├── 📄 fresh-seed.sql            # TRUNCATE + reseed
+└── 📄 generate-placeholders.js  # Generate public/images placeholders
 ```
 
 ---
 
-## 📊 File Count Summary
+## 📁 docs/
 
-| Directory | Files | Purpose |
-|-----------|-------|---------|
-| `app/` | ~20 | Pages & layouts |
-| `components/` | ~35 | UI components |
-| `lib/` | ~8 | Utilities |
-| `types/` | ~8 | TypeScript types |
-| `public/` | ~10 | Static assets |
-| `supabase/` | ~7 | Migrations |
-| Config files | ~10 | Project config |
-| **Total** | **~100** | |
+```
+docs/
+│
+├── 📄 DATABASE.md
+├── 📄 API.md / DEPLOYMENT.md / DESIGN_SYSTEM.md
+├── 📄 PROJECT_STRUCTURE.md      # (file ini)
+├── 📄 PRD.md / RULES.md / TASKS.md
+├── 📄 design-reference/
+└── 📁 screenshots/              # home, projects, blog, detail, login, admin-*
+```
 
 ---
 
-*Last Updated: August 2026*
+## 📊 File Count (actual)
+
+| Directory | Files | Purpose |
+|-----------|-------|---------|
+| `app/` | ~28 | Pages, layouts, api |
+| `components/` | ~28 | UI + sections + admin |
+| `lib/` | 5 | Supabase + utils + markdown |
+| `public/` | ~8 | Static + images |
+| `supabase/` | 2 | Migration + seed |
+| Config | ~6 | next, ts, postcss, env |
+| **Total** | **~77** | |
+
+---
+
+*Last Updated: Agustus 2026 — disinkronkan dengan struktur aktual (tanpa route group (public), flat app/).*

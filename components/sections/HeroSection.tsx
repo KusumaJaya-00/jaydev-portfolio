@@ -58,11 +58,10 @@ export function HeroSection() {
               <span className="uppercase">Full-Stack Developer</span>
             </div>
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.2rem] font-extrabold tracking-tight leading-[0.98] mb-7">
-              Hi, I&apos;m{' '}
-              <span className="text-sweep pb-2 -mb-2">Kusjay</span>.
+              Hi, I&apos;m <span className="text-sweep">Kusjay</span>
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground max-w-lg leading-relaxed mb-10">
-              I build websites and web apps that are fast and easy to use.
+              Crafting performant, accessible digital products with modern web technologies.
             </p>
             <div className="flex flex-col sm:flex-row items-start gap-4 mb-14">
               <Link
@@ -96,16 +95,16 @@ export function HeroSection() {
             </div>
             <div className="grid grid-cols-3 gap-4 sm:gap-6 border-t border-border pt-6 max-w-lg">
               <div>
-                <div className="text-xl sm:text-2xl font-bold tabular-nums">5+</div>
-                <div className="text-[11px] sm:text-xs text-muted-foreground mt-0.5">Years Exp</div>
+                <div className="text-xl sm:text-2xl font-bold tabular-nums">2+</div>
+                <div className="text-[11px] sm:text-xs text-muted-foreground mt-0.5">Years Coding</div>
               </div>
               <div>
-                <div className="text-xl sm:text-2xl font-bold tabular-nums">20+</div>
-                <div className="text-[11px] sm:text-xs text-muted-foreground mt-0.5">Projects</div>
+                <div className="text-xl sm:text-2xl font-bold tabular-nums">8+</div>
+                <div className="text-[11px] sm:text-xs text-muted-foreground mt-0.5">Projects Shipped</div>
               </div>
               <div>
-                <div className="text-xl sm:text-2xl font-bold tabular-nums">50+</div>
-                <div className="text-[11px] sm:text-xs text-muted-foreground mt-0.5">Clients</div>
+                <div className="text-xl sm:text-2xl font-bold tabular-nums">10+</div>
+                <div className="text-[11px] sm:text-xs text-muted-foreground mt-0.5">Teams Helped</div>
               </div>
             </div>
           </motion.div>
