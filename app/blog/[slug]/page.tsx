@@ -6,6 +6,7 @@ import { BackLink } from '@/components/layout/BackLink'
 import { renderMarkdown } from '@/lib/markdown'
 import { PublicShell } from '@/components/layout/PublicShell'
 import { InquiryCta } from '@/components/layout/InquiryCta'
+import { ProjectGallery } from '@/components/projects/ProjectGallery'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -31,7 +32,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
   return (
     <PublicShell>
-      <article className="container mx-auto px-4 md:px-8 py-16 max-w-3xl">
+      <article className="container mx-auto px-4 md:px-8 py-16 max-w-5xl">
         <div className="mb-4">
           <BackLink href="/blog" label="$ cd ~/blog" />
         </div>
@@ -58,6 +59,13 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
             alt={post.title}
             className="notch-sm w-full h-auto mb-8"
           />
+        )}
+
+        {post.gallery.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold mb-4 text-sweep">Galeri</h2>
+            <ProjectGallery images={post.gallery} title={post.title} />
+          </div>
         )}
 
         <div

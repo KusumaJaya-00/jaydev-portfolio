@@ -12,6 +12,7 @@ import type { Post } from '@/lib/supabase/queries'
 import { ChevronLeft } from 'lucide-react'
 import RichTextEditor from '@/components/admin/RichTextEditor'
 import ImageUpload from '@/components/admin/ImageUpload'
+import GalleryUpload from '@/components/admin/GalleryUpload'
 
 function estimateReadTime(content: string) {
  const words = content.trim().split(/\s+/).filter(Boolean).length
@@ -43,6 +44,8 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
   const tags = (formData.get('tags') as string).split(',').map(s => s.trim()).filter(Boolean)
   const content = formData.get('content') as string
   const status = (formData.get('status') as string) || 'draft'
+  let gallery: string[] = []
+  try { gallery = JSON.parse((formData.get('gallery') as string) || '[]') } catch { gallery = [] }
   const updates: Record<string, unknown> = {
    title: formData.get('title'),
    excerpt: formData.get('excerpt'),
@@ -50,6 +53,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
    category: formData.get('category'),
    tags,
    featured_image: formData.get('featured_image'),
+   gallery,
    status,
    read_time: estimateReadTime(content || ''),
    updated_at: new Date().toISOString(),
@@ -81,6 +85,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
     <RichTextEditor defaultValue={post.content || '' } />
     <div className="space-y-1.5"><Label htmlFor="tags">Tags (comma separated)</Label><Input id="tags" name="tags" defaultValue={post.tags?.join(', ') || ''} /></div>
     <ImageUpload name="featured_image" label="Image" folder="posts" defaultValue={post.featured_image || ''} />
+    <GalleryUpload name="gallery" label="Gallery Images" folder="posts" defaultValue={post.gallery || []} />
     <div className="space-y-1.5"><Label htmlFor="status">Status</Label><select id="status" name="status" className="w-full notch-sm border border-input bg-muted/40 px-3 py-2 text-sm outline-none focus:border-primary/50" defaultValue={post.status || 'draft'}><option value="draft">Draft</option><option value="published">Published</option></select></div>
     <Button type="submit" disabled={loading}>{loading ? 'Saving...' : 'Save Changes'}</Button>
    </form>

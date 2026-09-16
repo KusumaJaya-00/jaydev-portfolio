@@ -28,11 +28,13 @@ export type Post = {
   content: string | null
   excerpt: string | null
   featured_image: string | null
+  gallery: string[]
   category: string | null
   tags: string[]
   status: 'draft' | 'published'
   published_at: string | null
   read_time: number | null
+  sort_order: number
   seo_title: string | null
   seo_description: string | null
   created_at: string
@@ -100,6 +102,7 @@ export async function getPosts(limit?: number): Promise<Post[]> {
     .from('posts')
     .select('*')
     .eq('status', 'published')
+    .order('sort_order', { ascending: true })
     .order('published_at', { ascending: false })
     .order('created_at', { ascending: false })
 

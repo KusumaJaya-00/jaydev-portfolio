@@ -9,81 +9,24 @@
 \set ON_ERROR_STOP on
 
 -- ---------- projects ----------
-INSERT INTO projects (title, slug, description, content, category, tech_stack, live_url, github_url, featured_image, status, is_featured, sort_order)
+INSERT INTO projects (title, slug, description, content, category, tech_stack, live_url, github_url, featured_image, gallery, status, is_featured, sort_order)
 SELECT * FROM (VALUES
 (
-  'E-Commerce App', 'e-commerce-app',
-  'Full-stack e-commerce with cart, checkout, and order insights.',
-  E'<h2>Why this exists</h2><p>A storefront that stays fast even with large catalogs — clean cart, retry-safe checkout, and order tracking that actually helps support.</p><h3>Build</h3><ul><li>Next.js App Router + Server Actions for cart mutations</li><li>Supabase (Postgres, Auth, Storage) with RLS per user</li><li>Edge caching + image optimization</li></ul><blockquote>Principles: fewest round-trips, reversible actions, readable states.</blockquote><p>Result: checkout feel that doesn''t duplicate orders, and an admin view that stays calm.</p>',
-  'web', ARRAY['Next.js','Supabase','Tailwind']::text[],
-  'https://demo.jaydev.my.id/ecommerce'::text, 'https://github.com/KusumaJaya-00/jaydev-ecommerce'::text,
-  '/images/projects/placeholder-ecommerce-app.webp',
-  'published'::text, true, 0
-),
-(
-  'Task Manager', 'task-manager',
-  'Realtime Kanban for small teams — drag, sync, and notify.',
-  E'<h2>Overview</h2><p>A focused board: drag cards, see who moved what, get nudged when something blocks you.</p><h3>Architecture</h3><ol><li>React + dnd for the board</li><li>Node.js + Socket.IO for realtime presence</li><li>PostgreSQL as source of truth — sockets are ephemeral, DB is not</li></ol><p>Trade-off: sockets give liveness, but everything critical goes through the DB so refresh never loses work.</p>',
-  'web', ARRAY['React','Node.js','Socket.io','PostgreSQL']::text[],
-  'https://demo.jaydev.my.id/task-manager'::text, 'https://github.com/KusumaJaya-00/jaydev-task-manager'::text,
-  '/images/projects/placeholder-task-manager.webp',
-  'published'::text, true, 0
-),
-(
-  'API Gateway', 'api-gateway',
-  'Lightweight gateway: rate limit, cache, and centralized JWT.',
-  E'<h2>What it does</h2><p>A thin edge layer in front of internal services: per-key rate limits, Redis response cache, JWT verification once.</p><h3>Corners</h3><ul><li>Token bucket per route · key</li><li>Stale-while-revalidate for hot reads</li><li>Structured logs per hop</li></ul><pre><code>checks = verify(jwt) → limit(key, route) → cache.get() → upstream</code></pre>',
-  'tool', ARRAY['Go','Redis','Docker']::text[],
-  'https://demo.jaydev.my.id/api-gateway'::text, 'https://github.com/KusumaJaya-00/jaydev-api-gateway'::text,
-  '/images/projects/placeholder-api-gateway.webp',
-  'published'::text, false, 3
-),
-(
-  'HIMA TI Platform', 'hima-ti-platform',
-  'Internal platform for the informatics student association.',
-  E'<h2>Context</h2><p>Admin for Pengurus, archives of activities, and member services — with Microsoft campus auth (NIM as email prefix).</p><h3>Stack</h3><p>Laravel 13 + Filament 5, MySQL, Cloudflare R2 (primary storage) · GDrive backup.</p><h3>Operational notes</h3><ul><li>Image names in kebab-case</li><li>Dot-grid home, card notch everywhere — same language as this portfolio</li></ul>',
-  'web', ARRAY['Laravel','Filament','MySQL','Cloudflare R2']::text[],
-  'https://demo.jaydev.my.id/hima-ti'::text, 'https://github.com/KusumaJaya-00/jaydev-hima-ti'::text,
-  '/images/projects/placeholder-task-manager.webp',
-  'published'::text, true, 4
-),
-(
-  'Weather Dashboard', 'weather-dashboard',
-  'Find a city, see the next 7 days, and read the map.',
-  E'<h2>Experience</h2><p>Type a city, watch the forecast fill in, scrub the map — data is open, UI hides the seams.</p><h3>Data flow</h3><ol><li>Open-Meteo for forecast</li><li>MapLibre for the layer</li><li>Edge cache so we don''t burn the quota on every pan</li></ol>',
-  'web', ARRAY['Next.js','Open-Meteo','MapLibre']::text[],
-  'https://demo.jaydev.my.id/weather'::text, 'https://github.com/KusumaJaya-00/jaydev-weather'::text,
-  '/images/projects/placeholder-ecommerce-app.webp',
-  'published'::text, false, 5
-),
-(
-  'Inventory Ledger', 'inventory-ledger',
-  'Small-warehouse inventory with batch tracking and exports.',
-  E'<h2>Problem</h2><p>Spreadsheets drift — counts, batches, and expiries need a ledger.</p><h3>Solution</h3><ul><li>Ledger table as append-only source</li><li>Views for current stock + aging</li><li>CSV/XLSX export without heavy deps</li></ul><p>Outcome: audit-friendly history; corrections are new rows, not edits.</p>',
-  'web', ARRAY['Next.js','PostgreSQL','Prisma']::text[],
-  'https://demo.jaydev.my.id/inventory'::text, 'https://github.com/KusumaJaya-00/jaydev-inventory-ledger'::text,
-  '/images/placeholder-generic.webp',
-  'published'::text, false, 6
-),
-(
-  'Docs Microsite', 'docs-microsite',
-  'A docs site that behaves like an app — fast search, dark mode.',
-  E'<h2>Details</h2><p>MDX content with the same markdown pipeline as the portfolio, search via pagefind-style static index, and a TOC that follows you.</p><blockquote>Goal: reading feels frictionless — no layout shifts, code copy works first try.</blockquote>',
-  'web', ARRAY['Next.js','MDX','Tailwind']::text[],
-  'https://demo.jaydev.my.id/docs'::text, 'https://github.com/KusumaJaya-00/jaydev-docs-microsite'::text,
-  '/images/placeholder-generic.webp',
-  'published'::text, false, 7
-),
-(
-  'Receipt OCR', 'receipt-ocr',
-  'Snap a receipt — get line items, totals, and a tidy table.',
-  E'<h2>Flow</h2><ol><li>Capture → perspective fix</li><li>OCR + heuristic line grouping</li><li>Table review → export to sheets</li></ol><p>Privacy by default: images stay on device until the user opts into cloud assist.</p>',
-  'tool', ARRAY['TypeScript','Tesseract','Canvas']::text[],
-  'https://demo.jaydev.my.id/receipt-ocr'::text, 'https://github.com/KusumaJaya-00/jaydev-receipt-ocr'::text,
-  '/images/placeholder-generic.webp',
-  'published'::text, false, 8
+  'ResepKu', 'resepku',
+  'Aplikasi Android untuk menjelajah, mencari, dan menyimpan resep masakan Indonesia — jelajah kartu resep, filter kategori, simpan favorit offline.',
+  E'<h2>Tentang ResepKu</h2><p>ResepKu adalah aplikasi Android (Kotlin) untuk menjelajah, mencari, dan menyimpan resep masakan Indonesia dalam satu genggaman. Dibuat sebagai tugas UAS Pemrograman Mobile oleh kelompok 5 orang: I Putu Adhiatman, I Komang Bayu Kurniawan, I Nyoman Pande Guna Darma, I Made Kusuma Jaya Wardana, dan Putu Ryan Raditya.</p><h2>Empat Fitur Utama</h2><h3>1. Beranda — Jelajah Semua Resep</h3><p>Saat aplikasi dibuka, semua resep tampil sebagai kartu berisi gambar, nama, dan kategori. Tinggal scroll untuk menjelajah, tarik ke bawah untuk menyegarkan daftar. Di balik layar, data resep diambil dari internet lalu ditampilkan dalam grid, dengan RecyclerView adapter yang mengubah daftar data menjadi tampilan.</p><h3>2. Pencarian dan Filter</h3><p>Ketik nama, hasil muncul huruf demi huruf tanpa perlu menekan tombol cari. Chip kategori menyaring resep — misalnya hanya menampilkan kategori "Ayam". Data yang sudah diunduh disaring di memori, jadi terasa instan.</p><h3>3. Favorit — Simpan Resep Pilihan</h3><p>Tekan ikon hati untuk menyimpan resep. Resep favorit terkumpul di tab khusus dan tetap tersimpan walau aplikasi ditutup atau sedang tanpa internet — tersimpan di database lokal SQLite di dalam HP.</p><h3>4. Detail Resep</h3><p>Semua informasi dalam satu halaman: foto resep berukuran besar beserta label kategorinya, daftar bahan lengkap, dan langkah memasak yang disusun rapi dengan nomor urut.</p><h2>Sumber Data</h2><p>ResepKu memakai dua sumber data: <strong>internet (GitHub Raw)</strong> untuk daftar resep — file JSON di GitHub diakses lewat link Raw-nya, dipakai persis seperti alamat API tanpa perlu server sendiri — dan <strong>SQLite lokal</strong> untuk resep favorit di tab Favorit yang bisa diakses tanpa koneksi internet.</p><h2>Cara Penggunaan</h2><ol><li><strong>Buka &amp; Jelajah</strong> — aplikasi terbuka di Beranda dan scroll untuk melihat resep.</li><li><strong>Cari &amp; Detail</strong> — saring atau cari resep, lalu ketuk kartunya untuk detail.</li><li><strong>Simpan Favorit</strong> — tekan ikon hati untuk menyimpan resep ke Favorit.</li></ol><h2>Teknologi</h2><ul><li>Kotlin dengan Material Design dan ViewBinding</li><li>Retrofit + Gson untuk mengambil file JSON dari GitHub Raw</li><li>Glide untuk memuat gambar resep</li><li>RecyclerView + ViewModel untuk daftar</li><li>SQLite untuk penyimpanan favorit lokal</li></ul><blockquote>Prinsip desain: semuanya alat standar Android — dipilih yang sederhana dan mudah dijelaskan.</blockquote>',
+  'mobile', ARRAY['Kotlin','Retrofit','Gson','Glide','SQLite','Material']::text[],
+  NULL::text, 'https://github.com/KusumaJaya-00/ResepKu'::text,
+  '/images/projects/resepku/thumbnail.png',
+  ARRAY[
+    '/images/projects/resepku/ss-resepku-1.png',
+    '/images/projects/resepku/ss-resepku-2.png',
+    '/images/projects/resepku/ss-resepku-3.png',
+    '/images/projects/resepku/ss-resepku-4.png'
+  ]::text[],
+  'published'::text, false, 9
 )
-) AS v(title, slug, description, content, category, tech_stack, live_url, github_url, featured_image, status, is_featured, sort_order)
+) AS v(title, slug, description, content, category, tech_stack, live_url, github_url, featured_image, gallery, status, is_featured, sort_order)
 WHERE NOT EXISTS (SELECT 1 FROM projects p WHERE p.slug = v.slug);
 
 -- ---------- posts ----------

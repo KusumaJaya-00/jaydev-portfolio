@@ -11,6 +11,7 @@ import { supabase } from '@/lib/supabase/client'
 import { ChevronLeft } from 'lucide-react'
 import RichTextEditor from '@/components/admin/RichTextEditor'
 import ImageUpload from '@/components/admin/ImageUpload'
+import GalleryUpload from '@/components/admin/GalleryUpload'
 
 export default function NewProjectPage() {
  const router = useRouter()
@@ -24,6 +25,12 @@ export default function NewProjectPage() {
   const formData = new FormData(e.currentTarget)
   const techStack = (formData.get('tech_stack') as string).split(',').map(s => s.trim()).filter(Boolean)
   const slug = (formData.get('title') as string).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+  let gallery: string[] = []
+  try { gallery = JSON.parse((formData.get('gallery') as string) || '[]') } catch { gallery = [] }
+  // Project baru ditaruh di urutan paling akhir.
+  let sortOrder = 0
+  const { data: maxRows } = await supabase.from('projects').select('sort_order').order('sort_order', { ascending: false }).limit(1)
+  if (maxRows && maxRows.length > 0) sortOrder = (maxRows[0].sort_order || 0) + 1
   const project = {
    title: formData.get('title'),
    slug,
@@ -34,8 +41,10 @@ export default function NewProjectPage() {
    live_url: formData.get('live_url'),
    github_url: formData.get('github_url'),
    featured_image: formData.get('featured_image'),
+   gallery,
    status: formData.get('status') || 'draft',
    is_featured: formData.get('is_featured') === 'on',
+   sort_order: sortOrder,
   }
   const { error } = await supabase.from('projects').insert([project])
   if (error) { setError(error.message); setLoading(false); return }
@@ -60,6 +69,7 @@ export default function NewProjectPage() {
      <div className="space-y-1.5"><Label htmlFor="github_url">GitHub URL</Label><Input id="github_url" name="github_url" type="url" placeholder="https://github.com/..." /></div>
     </div>
     <ImageUpload name="featured_image" label="Image" folder="projects" />
+    <GalleryUpload name="gallery" label="Gallery Images" folder="projects" />
     <div className="flex items-center gap-6">
      <div className="flex items-center gap-2"><Switch id="is_featured" name="is_featured" defaultChecked={false} /><Label htmlFor="is_featured">Show on Homepage</Label></div>
      <div className="space-y-1.5"><Label htmlFor="status">Status</Label><select id="status" name="status" className="w-full notch-sm border border-input bg-muted/40 px-3 py-2 text-sm outline-none focus:border-primary/50" defaultValue="draft"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></div>

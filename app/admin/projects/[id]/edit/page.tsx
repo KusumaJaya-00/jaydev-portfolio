@@ -13,6 +13,7 @@ import type { Project } from '@/lib/supabase/queries'
 import { ChevronLeft } from 'lucide-react'
 import RichTextEditor from '@/components/admin/RichTextEditor'
 import ImageUpload from '@/components/admin/ImageUpload'
+import GalleryUpload from '@/components/admin/GalleryUpload'
 
 export default function EditProjectPage({ params }: { params: Promise<{ id: string }> }) {
  const { id } = use(params)
@@ -37,6 +38,8 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
   setError('')
   const formData = new FormData(e.currentTarget)
   const techStack = (formData.get('tech_stack') as string).split(',').map(s => s.trim()).filter(Boolean)
+  let gallery: string[] = []
+  try { gallery = JSON.parse((formData.get('gallery') as string) || '[]') } catch { gallery = [] }
   const updates = {
    title: formData.get('title'),
    description: formData.get('description'),
@@ -46,6 +49,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
    live_url: formData.get('live_url'),
    github_url: formData.get('github_url'),
    featured_image: formData.get('featured_image'),
+   gallery,
    status: formData.get('status') || 'draft',
    is_featured: formData.get('is_featured') === 'on',
    updated_at: new Date().toISOString(),
@@ -77,6 +81,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
      <div className="space-y-1.5"><Label htmlFor="github_url">GitHub URL</Label><Input id="github_url" name="github_url" type="url" defaultValue={project.github_url || ''} /></div>
     </div>
     <ImageUpload name="featured_image" label="Image" folder="projects" defaultValue={project.featured_image || ''} />
+    <GalleryUpload name="gallery" label="Gallery Images" folder="projects" defaultValue={project.gallery || []} />
     <div className="flex items-center gap-6">
      <div className="flex items-center gap-2"><Switch id="is_featured" name="is_featured" defaultChecked={project.is_featured} /><Label htmlFor="is_featured">Show on Homepage</Label></div>
      <div className="space-y-1.5"><Label htmlFor="status">Status</Label><select id="status" name="status" className="w-full notch-sm border border-input bg-muted/40 px-3 py-2 text-sm outline-none focus:border-primary/50" defaultValue={project.status || 'draft'}><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></div>
