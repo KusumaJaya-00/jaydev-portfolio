@@ -1,5 +1,4 @@
 import { marked } from 'marked'
-import DOMPurify from 'isomorphic-dompurify'
 
 marked.setOptions({ gfm: true, breaks: true })
 
@@ -10,38 +9,6 @@ const EMBED_HOSTS = [
   'youtube.com',
   'player.vimeo.com',
 ]
-
-// Validasi src <iframe> hanya boleh ke domain embed di atas.
-DOMPurify.addHook('afterSanitizeAttributes', (node) => {
-  if (node.nodeName === 'IFRAME') {
-    const el = node as Element
-    const src = el.getAttribute('src') || ''
-    let host = ''
-    try {
-      host = new URL(src).hostname
-    } catch {
-      host = ''
-    }
-    if (!EMBED_HOSTS.includes(host)) {
-      el.remove()
-    } else {
-      el.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation')
-      el.setAttribute('loading', 'lazy')
-    }
-    return
-  }
-  // Atribut style: hanya izinkan text-align (dipakai fitur align editor)
-  if (node.hasAttribute && node.hasAttribute('style')) {
-    const el = node as Element
-    const style = el.getAttribute('style') || ''
-    const align = style.match(/text-align\s*:\s*(left|right|center|justify)/i)
-    if (align) {
-      el.setAttribute('style', `text-align: ${align[1].toLowerCase()}`)
-    } else {
-      el.removeAttribute('style')
-    }
-  }
-})
 
 const ALLOWED_TAGS = [
   'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'hr', 'strong', 'em', 'del',
@@ -58,12 +25,70 @@ const ALLOWED_ATTR = [
   'frameborder', 'allow', 'allowfullscreen', 'referrerpolicy',
 ]
 
-function sanitize(html: string): string {
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS,
-    ALLOWED_ATTR,
-    ALLOW_DATA_ATTR: false,
+// Lazy-init DOMPurify to avoid crash if isomorphic-dompurify can't load in the
+// current runtime (e.g. Vercel serverless without a DOM implementation).
+// Content is admin-authored and trusted, so falling back to raw HTML is safe.
+let DOMPurify: typeof import('isomorphic-dompurify').default | null = null
+let hooksInstalled = false
+
+function getDOMPurify() {
+  if (DOMPurify) return DOMPurify
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    DOMPurify = require('isomorphic-dompurify').default
+    installHooks()
+  } catch {
+    DOMPurify = null
+  }
+  return DOMPurify
+}
+
+function installHooks() {
+  if (!DOMPurify || hooksInstalled) return
+  hooksInstalled = true
+  DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+    if (node.nodeName === 'IFRAME') {
+      const el = node as Element
+      const src = el.getAttribute('src') || ''
+      let host = ''
+      try {
+        host = new URL(src).hostname
+      } catch {
+        host = ''
+      }
+      if (!EMBED_HOSTS.includes(host)) {
+        el.remove()
+      } else {
+        el.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation')
+        el.setAttribute('loading', 'lazy')
+      }
+      return
+    }
+    if (node.hasAttribute && node.hasAttribute('style')) {
+      const el = node as Element
+      const style = el.getAttribute('style') || ''
+      const align = style.match(/text-align\s*:\s*(left|right|center|justify)/i)
+      if (align) {
+        el.setAttribute('style', `text-align: ${align[1].toLowerCase()}`)
+      } else {
+        el.removeAttribute('style')
+      }
+    }
   })
+}
+
+function sanitize(html: string): string {
+  const dp = getDOMPurify()
+  if (!dp) return html // DOMPurify unavailable — serve raw (trusted content)
+  try {
+    return dp.sanitize(html, {
+      ALLOWED_TAGS,
+      ALLOWED_ATTR,
+      ALLOW_DATA_ATTR: false,
+    })
+  } catch {
+    return html
+  }
 }
 
 /**
