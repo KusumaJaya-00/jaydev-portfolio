@@ -78,57 +78,41 @@ SELECT * FROM (VALUES
 WHERE NOT EXISTS (SELECT 1 FROM projects p WHERE p.slug = v.slug);
 
 -- ---------- posts ----------
-INSERT INTO posts (title, slug, excerpt, content, category, tags, featured_image, status, read_time, published_at)
+INSERT INTO posts (title, slug, excerpt, content, category, tags, featured_image, status, read_time, published_at, sort_order)
 SELECT * FROM (VALUES
 (
-  'How I Built This Portfolio', 'how-i-built-this-portfolio',
-  'Next.js + Supabase + Tailwind v4: notch corners, glass nav, dot-grid — and a daily AI-assisted workflow.',
-  E'<h2>Why this stack</h2><p>Next.js App Router keeps data close to the page, Supabase (Postgres · Auth · Storage) keeps ops simple, Tailwind v4 keeps styling in one language.</p><h3>Design choices</h3><ul><li><strong>Notch corners</strong> on every card and button (<code>clip-path</code>) — a single visual identity.</li><li>Dark base with <code>#3D7FFF</code> accents, subtle dot-grid on the body.</li><li>IBM Plex Mono for the <code>jaydev</code> wordmark.</li></ul><blockquote>Principle: smallest diff that communicates — ship, watch, refine.</blockquote><h3>Workflow</h3><p>Designed with AI agents (Hermes, Claude, Codex): I steer, agents execute, I review the diff — not just the outcome.</p>',
+  'Arsitektur Web HIMAPRODI TI: Laravel Filament untuk Organisasi Kampus', 'arsitektur-web-himaprodi-ti',
+  'Bagaimana membangun platform manajemen organisasi kampus — berita, event, pembayaran, absensi QR, sertifikat — dengan Laravel 13 dan Filament 5.',
+  E'<h2>Mengapa Dibangun?</h2><p>HIMAPRODI TI ITB STIKOM Bali butuh satu platform yang menyatukan semua kegiatan organisasi: publikasi berita, agenda event, pendaftaran kegiatan, pembayaran online, absensi berbasis QR, penerbitan sertifikat, hingga pengelolaan kas. Sebelumnya, semuanya ditangani manual lewat WhatsApp dan spreadsheet.</p><h2>Teknologi yang Dipilih</h2><ul><li><strong>Laravel 13 (PHP 8.4)</strong> — framework utama, mature ecosystem, cocok untuk aplikasi organisasi</li><li><strong>Filament 5</strong> — admin panel yang powerful, CRUD otomatis, role-based access</li><li><strong>Livewire 4</strong> — frontend interaktif tanpa full SPA</li><li><strong>Tailwind CSS 4 + DaisyUI 5</strong> — styling cepat, konsisten</li><li><strong>MySQL</strong> — database relational untuk data terstruktur</li></ul><h2>Arsitektur Aplikasi</h2><h3>1. Business Logic di Services</h3><p>Semua logika bisnis ditempatkan di app/Services, bukan di controller atau view.</p><h3>2. Authorization via Policy</h3><p>Setiap resource punya Policy-nya sendiri. Role dan permission dikelola pakai spatie/laravel-permission.</p><h3>3. Fitur Utama</h3><ul><li>Berita &amp; Agenda — publikasi berita dengan halaman detail, daftar event, galeri foto</li><li>Pendaftaran &amp; Pembayaran — registrasi online, integrasi webhook SumoPod</li><li>Absensi QR — pemindaian QR code pakai html5-qrcode</li><li>Sertifikat — penerbitan dan unduhan sertifikat per peserta</li><li>Profil Pengurus — manajemen data pengurus organisasi</li><li>Kas Organisasi — pencatatan transaksi keuangan</li></ul><h2>Deployment</h2><p>CI/CD pakai GitHub Actions: test lalu deploy ke VPS.</p><blockquote>Prinsip utama: pisahkan concern. Business logic di Services, authorization di Policy, presentation di Blade/Livewire.</blockquote>',
+  'tutorial', ARRAY['laravel','filament','php','organisasi']::text[],
+  '/images/projects/hima/ss-hima-home-prod.png',
+  'published'::text, 5, now() - interval '2 day', 0
+),
+(
+  'React 19 + Framer Motion: Membuat 3D Interactive Card Stack', 'react-framer-motion-3d-card-stack',
+  'Membangun animasi kartu pengurus 3D dengan drag, flip, dan fanning effect untuk Minigames HIMA TI.',
+  E'<h2>Tantangan</h2><p>Untuk stand booth GMTI 2026, kami butuh cara visual yang menarik untuk menampilkan 34 pengurus HIMA TI. Hasilnya: 3D card stack yang bisa di-drag, di-flip, dan punya efek fanning — semua di browser tanpa WebGL.</p><h2>Teknologi</h2><ul><li><strong>React 19</strong> — component model yang clean</li><li><strong>Framer Motion v13</strong> — animasi declarative, spring physics</li><li><strong>Tailwind CSS v4</strong> — styling minimal</li></ul><h2>Cara Kerja</h2><h3>1. Stack Layout</h3><p>Kartu ditumpuk dengan offset tipis. Kartu teratas punya z-index tertinggi.</p><h3>2. Drag &amp; Swipe</h3><p>Framer Motion drag prop dengan dragConstraints. Saat drag selesai, animasi spring mengembalikan posisi.</p><h3>3. Flip Animation</h3><p>Klik kartu → rotateY dari 0 ke 180° dengan spring transition.</p><h3>4. Fanning Effect</h3><p>Saat hover, kartu-kartu di belakang menyebar dengan rotateZ dan translateX bertahap.</p><h2>Audio Engine</h2><p>Semua sound effect dihasilkan pakai Web Audio API — tanpa file audio eksternal. 4 genre BGM synthesizer dan 5 profil SFX.</p><blockquote>Tips: pakai useMotionValue untuk value yang berubah tiap frame, dan useTransform untuk map value ke CSS property.</blockquote>',
+  'tutorial', ARRAY['react','framer-motion','animation','javascript']::text[],
+  '/images/projects/minigames/ss-mini-home.png',
+  'published'::text, 4, now() - interval '5 day', 1
+),
+(
+  'PHP MVC dari Nol: Membangun Fixie Shop', 'php-mvc-fixie-shop',
+  'E-commerce fixie bike dengan arsitektur MVC murni — tanpa framework, dari router sampai template engine.',
+  E'<h2>Kenapa dari Nol?</h2><p>Fixie Shop dibangun untuk belajar arsitektur MVC murni tanpa bantuan framework seperti Laravel. Hasilnya: pemahaman mendalam tentang bagaimana framework bekerja di balik layar.</p><h2>Struktur MVC</h2><pre><code>fixie-shop/├── config/        # Database config, app config├── controllers/   # ProductController, AuthController, CartController├── models/        # Product, User, Cart, Order├── views/         # HTML templates dengan PHP├── helpers/       # Utility functions├── database/      # Schema dan migrations└── public/        # Entry point (index.php)</code></pre><h3>Router Sederhana</h3><p>public/index.php membaca URL, mencocokkan dengan route definition, dan memanggil controller yang sesuai.</p><h3>Model Layer</h3><p>Setiap model punya method untuk CRUD. Query builder manual pakai PDO dengan prepared statements.</p><h3>View Templates</h3><p>PHP biasa sebagai template engine. include untuk layout, extract() untuk pass data ke view.</p><h2>Fitur</h2><ul><li>Katalog 17 produk dengan filter kategori, brand, warna, ukuran</li><li>Sorting dinamis (harga, nama, terbaru)</li><li>Autentikasi user (register, login, logout)</li><li>Keranjang belanja dengan kalkulasi harga</li><li>Admin panel untuk CRUD produk</li></ul><h2>Pelajaran</h2><ul><li>MVC bukan sekadar folder structure — itu separation of concerns</li><li>Prepared statements wajib untuk keamanan SQL injection</li><li>Template engine itu cuma PHP yang sudah di-include</li></ul><blockquote>Framework itu kumpulan best practices yang sudah di-packaging. Tanpa framework, kamu tahu exactly apa yang terjadi.</blockquote>',
+  'tutorial', ARRAY['php','mvc','ecommerce','javascript']::text[],
+  '/images/projects/fixie-shop/ss-fixie-home.png',
+  'published'::text, 4, now() - interval '8 day', 2
+),
+(
+  'Next.js + Supabase: Membangun Portfolio yang Dinamis', 'nextjs-supabase-portfolio',
+  'Portfolio modern dengan Next.js App Router, Supabase (Postgres + Auth + Storage), dan Tailwind v4 — semua data dari database.',
+  E'<h2>Konsep</h2><p>Portfolio ini bukan statis — semua project dan blog post diambil dari Supabase (Postgres). Admin bisa tambah/edit/hapus project dan blog lewat dashboard, tanpa touch code.</p><h2>Stack</h2><ul><li><strong>Next.js 15 (App Router)</strong> — server components, streaming, ISR</li><li><strong>Supabase</strong> — Postgres, Auth, Storage, Realtime</li><li><strong>Tailwind CSS v4</strong> — utility-first styling</li><li><strong>TypeScript</strong> — type safety</li></ul><h2>Data Flow</h2><h3>Server Components</h3><p>Data di-fetch langsung di server component — tidak ada useEffect untuk data loading.</p><h3>Gallery System</h3><p>Project punya array gallery. Storage bucket images dengan public read.</p><h3>Admin Dashboard</h3><p>CRUD untuk projects dan posts. Upload gambar langsung ke Supabase Storage.</p><h2>Desain</h2><ul><li>Notch corners — clip-path untuk identitas visual</li><li>Dark theme — #06070A background, #3D7FFF accent</li><li>Dot-grid — subtle pattern di body</li><li>Glass nav — backdrop-blur untuk navigation</li></ul><blockquote>Portfolio yang baik bukan yang paling rumit, tapi yang paling jujur menunjukkan apa yang bisa kamu buat.</blockquote>',
   'tutorial', ARRAY['nextjs','supabase','portfolio','tailwind']::text[],
-  '/images/posts/placeholder-how-i-built-this-portfolio.webp',
-  'published'::text, 4, now() - interval '9 day'
-),
-(
-  'Catatan Next.js × Supabase', 'nextjs-supabase-notes',
-  'Pola server/client, RLS, storage public URL — catatan lapangan yang sering kepakai.',
-  E'<h2>Server vs Client</h2><p>Read di Server Components via server client; browser client only for user interactions.</p><h2>RLS</h2><p>Set policies di tabel publik: read terbuka, write hanya lewat <code>auth.role() = ''authenticated''</code>.</p><h2>Storage</h2><p>Satu bucket <code>images</code>, public read; path konsisten <code>kebab-case</code>.</p><h3>Cliff notes</h3><ul><li><code>createServerClient</code> per request di RSC</li><li>service role hanya di trusted routes</li></ul>',
-  'notes', ARRAY['nextjs','supabase']::text[],
-  '/images/posts/placeholder-nextjs-supabase-notes.webp',
-  'published'::text, 3, now() - interval '12 day'
-),
-(
-  'AI-Assisted Development Workflow', 'ai-assisted-dev-workflow',
-  'How I use Hermes, Claude, and Codex daily: delegate, review the diff, gate quality.',
-  E'<h2>Why</h2><p>Agents accelerate execution; direction and taste stay human.</p><h2>Daily flow</h2><ol><li>Break the task into small, unambiguous units</li><li>Delegate with full context</li><li>Review the diff — not just the result</li><li>Gate: lint, build, manual check on critical paths</li></ol><blockquote>Strong context in → strong work out.</blockquote><h3>Lessons</h3><ul><li>Small diffs are reviewable diffs</li><li>Automate the checklist, not the judgment</li></ul>',
-  'workflow', ARRAY['ai','workflow','hermes']::text[],
-  '/images/posts/placeholder-ai-assisted-dev.webp',
-  'published'::text, 3, now() - interval '18 day'
-),
-(
-  'NevaGate on Next: Glass, Dot-grid, and Notch', 'nevagate-on-next',
-  'Translating a reference design system into this portfolio — tokens, motion, and where we diverge.',
-  E'<h2>From reference to tokens</h2><p>The reference (NevaGate) speaks in <em>surface-line</em> and <em>ink-muted</em> — we map those to our tokens: <code>border</code>, <code>muted-foreground</code>, <code>primary</code>.</p><h2>Shared vocabulary</h2><ul><li><code>.notch</code> · <code>.notch-sm</code> · <code>.badge-notch</code></li><li><code>.glass</code> for nav, dot-grid on body</li><li><code>.text-sweep</code>, <code>.pulse-ring</code>, <code>.btn-glow</code></li></ul><p>Where we diverge is intentional: our cards live denser, typography a touch tighter.</p>',
-  'notes', ARRAY['design','nextjs','tokens']::text[],
-  '/images/placeholder-generic.webp',
-  'published'::text, 4, now() - interval '7 day'
-),
-(
-  'Laravel Filament: R2 as Primary, GDrive as Backup', 'filament-r2-gdrive',
-  'How the HIMA TI app ships uploads: kebab-case names, signed URLs, and a backup heartbeat.',
-  E'<h2>Storage</h2><p>R2 as primary, Google Drive as backup (rclone heartbeat). Names in <code>kebab-case</code>: <code>foto-pengurus.webp</code>, never underscores.</p><h2>Gotchas</h2><ul><li>Ensure signed URL policy matches the <code>images</code> public read</li><li>Retry on transient R2 5xx — don''t surface it as a user error</li></ul><pre><code>checks = write(R2) → verify(publicUrl) → enqueue(backup)</code></pre>',
-  'tutorial', ARRAY['laravel','filament','r2','storage']::text[],
-  '/images/placeholder-generic.webp',
-  'published'::text, 5, now() - interval '4 day'
-),
-(
-  'The Small-Diff Discipline', 'small-diff-discipline',
-  'The shortest path to done is the right path — if you understood the whole thing first.',
-  E'<h2>Understand first, then be lazy</h2><p>The ladder that matters: reuse → stdlib → platform feature → installed dep → one line → minimal code. Skipping comprehension to ship a small diff is the dangerous kind of lazy.</p><blockquote>The smallest change in the wrong place isn''t lazy, it''s a second bug.</blockquote><h3>Checklist</h3><ul><li>Fix root cause in the shared function, not every caller</li><li>Leave one runnable check for non-trivial logic</li><li>Name the ceiling: <code># ponytail: …</code></li></ul>',
-  'workflow', ARRAY['ponytail','craft','review']::text[],
-  '/images/placeholder-generic.webp',
-  'published'::text, 3, now() - interval '2 day'
+  '/images/projects/resepku/thumbnail.png',
+  'published'::text, 4, now() - interval '12 day', 3
 )
-) AS v(title, slug, excerpt, content, category, tags, featured_image, status, read_time, published_at)
+) AS v(title, slug, excerpt, content, category, tags, featured_image, status, read_time, published_at, sort_order)
 WHERE NOT EXISTS (SELECT 1 FROM posts p WHERE p.slug = v.slug);
 
 -- ---------- settings default ----------
