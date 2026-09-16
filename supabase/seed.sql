@@ -68,7 +68,9 @@ SELECT * FROM (VALUES
   'https://minigames.jaydev.my.id/'::text, 'https://github.com/kusjay-space/hima-ti-minigames-ultimate'::text,
   '/images/projects/minigames/ss-mini-home.png',
   ARRAY[
-    '/images/projects/minigames/ss-mini-home.png'
+    '/images/projects/minigames/ss-mini-home.png',
+    '/images/projects/minigames/ss-mini-gameplay.png',
+    '/images/projects/minigames/ss-mini-result.png'
   ]::text[],
   'published'::text, false, 12
 )
