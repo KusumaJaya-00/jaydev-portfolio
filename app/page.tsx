@@ -1,6 +1,5 @@
 import { PublicShell } from '@/components/layout/PublicShell'
 import { getFeaturedProjects, getPosts } from '@/lib/supabase/queries'
-import { CursorGlow } from '@/components/layout/CursorGlow'
 import { HeroSection } from '@/components/sections/HeroSection'
 import { TechMarqueeSection } from '@/components/sections/TechMarqueeSection'
 import { AboutSection } from '@/components/sections/AboutSection'
@@ -16,7 +15,6 @@ export default async function HomePage() {
 
   return (
     <PublicShell>
-      <CursorGlow />
       <HeroSection />
       <TechMarqueeSection />
       <AboutSection />

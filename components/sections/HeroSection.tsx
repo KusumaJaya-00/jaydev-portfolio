@@ -86,7 +86,7 @@ export function HeroSection() {
                 </span>
               </Link>
               <Link
-                href="/resume.pdf"
+                href="/cv-kusjay.pdf"
                 download
                 className="w-full sm:w-auto px-7 py-3.5 notch border border-border text-foreground font-semibold text-base hover:border-primary/50 hover:bg-card/60 transition-all duration-300 text-center"
               >

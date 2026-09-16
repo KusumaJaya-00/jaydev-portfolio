@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Plus_Jakarta_Sans, IBM_Plex_Mono } from 'next/font/google'
 import { Toaster } from '@/components/ui/toast'
+import { CursorGlow } from '@/components/layout/CursorGlow'
 import './globals.css'
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -62,6 +63,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${plusJakarta.variable} ${ibmPlexMono.variable}`}>
       <body className="bg-background text-foreground font-sans antialiased dot-grid">
+        <CursorGlow />
         {children}
         <Toaster />
       </body>
