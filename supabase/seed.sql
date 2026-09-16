@@ -25,6 +25,52 @@ SELECT * FROM (VALUES
     '/images/projects/resepku/ss-resepku-4.png'
   ]::text[],
   'published'::text, false, 9
+),
+(
+  'Web HIMAPRODI TI', 'web-himaprodi-ti',
+  'Website resmi Himpunan Mahasiswa Teknik Informatika (HIMAPRODI TI) ITB STIKOM Bali — platform manajemen organisasi: berita, agenda event, pendaftaran & pembayaran, absensi QR, sertifikat, pengurus, dan kas.',
+  E'<h2>Tentang Web HIMAPRODI TI</h2><p>Web HIMAPRODI TI adalah website resmi Himpunan Mahasiswa Teknik Informatika (HIMAPRODI TI) ITB STIKOM Bali. Dibangun sebagai platform manajemen organisasi lengkap — bukan sekadar landing page — mencakup publikasi berita, agenda event, pendaftaran dan pembayaran kegiatan, absensi berbasis QR, penerbitan sertifikat, profil pengurus organisasi, dan pengelolaan kas.</p><h2>Fitur Utama</h2><h3>1. Berita &amp; Agenda</h3><p>Publikasi berita kegiatan dengan halaman detail, daftar agenda event, dan galeri foto kegiatan yang dikelola lewat panel admin. Situs juga dilengkapi sitemap.xml untuk SEO.</p><h3>2. Pendaftaran &amp; Pembayaran Event</h3><p>Mahasiswa mendaftar event online, melakukan pembayaran, dan sistem memverifikasi pembayaran — termasuk integrasi webhook pembayaran SumoPod dan verifikasi kuitansi via kode.</p><h3>3. Absensi Berbasis QR</h3><p>Absensi event menggunakan pemindaian QR code (html5-qrcode / jsQR). Peserta memindai QR pada kuitansi atau event, dan kehadiran tercatat otomatis.</p><h3>4. Sertifikat &amp; Pengurus</h3><p>Sertifikat peserta diterbitkan dan diunduh per peserta, profil pengurus organisasi ditampilkan rapi, dan kas organisasi dikelola dengan catatan transaksi.</p><h2>Teknologi</h2><ul><li>Laravel 13 (PHP 8.4) sebagai framework utama</li><li>Filament 5 untuk panel admin</li><li>Livewire 4 + Blade Components untuk frontend interaktif</li><li>Tailwind CSS 4 + DaisyUI 5 untuk styling</li><li>Google OAuth (Socialite) + email/password untuk autentikasi</li><li>spatie/laravel-permission untuk roles &amp; permissions</li><li>MySQL, queue database, PHPUnit testing</li><li>CI/CD GitHub Actions: test lalu deploy ke VPS</li></ul><blockquote>Arsitektur: business logic di app/Services, authorization via Policy — bukan ditempel di controller atau view.</blockquote>',
+  'web', ARRAY['Laravel','Filament','Livewire','Tailwind CSS','DaisyUI','MySQL','Alpine.js']::text[],
+  'https://himaproditi-stikom.org/'::text, NULL::text,
+  '/images/projects/hima/thumbnail.png',
+  ARRAY[
+    '/images/projects/hima/ss-hima-home-prod.png',
+    '/images/projects/hima/ss-hima-tentang-prod.png',
+    '/images/projects/hima/ss-hima-berita-dev.png',
+    '/images/projects/hima/ss-hima-berita-detail-1.png',
+    '/images/projects/hima/ss-hima-events-dev.png',
+    '/images/projects/hima/ss-hima-event-detail-2.png',
+    '/images/projects/hima/ss-hima-galeri-dev.png',
+    '/images/projects/hima/ss-hima-galeri-detail-1.png',
+    '/images/projects/hima/ss-hima-kontak-prod.png'
+  ]::text[],
+  'published'::text, true, 10
+),
+(
+  'Fixie Shop', 'fixie-shop',
+  'E-commerce platform untuk jual beli sepeda fixie dan komponennya — katalog produk, filter kategori/brand/warna/ukuran, keranjang belanja, autentikasi user, dan admin panel.',
+  E'<h2>Tentang Fixie Shop</h2><p>Fixie Shop adalah platform e-commerce yang dikhususkan untuk komunitas sepeda fixie di Bali. Website ini menyediakan katalog lengkap produk sepeda fixie — mulai dari frame, wheelset, sparepart, hingga aksesoris — dengan sistem filter berdasarkan kategori, brand, warna, dan ukuran.</p><h2>Fitur Utama</h2><h3>1. Katalog &amp; Filter Produk</h3><p>17 produk dari brand ternama (TSUNAMI, Engine 11, WEAPON, E11, Continental) dengan filter multi-kriteria dan sorting dinamis.</p><h3>2. Autentikasi &amp; User Management</h3><p>Sistem registrasi dan login untuk pengguna, dengan role-based access untuk admin panel.</p><h3>3. Keranjang Belanja</h3><p>Keranjang belanja dengan kalkulasi harga otomatis dan alur checkout.</p><h3>4. Admin Panel</h3><p>Panel administrasi untuk mengelola produk, kategori, dan pesanan.</p><h2>Teknologi</h2><ul><li>PHP (MVC Architecture)</li><li>SQLite / MySQL</li><li>Template Engine (Views)</li><li>RESTful Controllers</li><li>Composer (Package Manager)</li></ul>',
+  'web', ARRAY['PHP','SQLite','MVC','HTML/CSS','JavaScript']::text[],
+  'https://fixie-shop.jaydev.my.id/'::text, 'https://github.com/KusumaJaya-00/Fixie-Shop'::text,
+  '/images/projects/fixie-shop/ss-fixie-home.png',
+  ARRAY[
+    '/images/projects/fixie-shop/ss-fixie-home.png',
+    '/images/projects/fixie-shop/ss-fixie-products.png',
+    '/images/projects/fixie-shop/ss-fixie-detail.png'
+  ]::text[],
+  'published'::text, false, 11
+),
+(
+  'Minigames Flashcard HIMA TI', 'minigames-hima-ti',
+  'Aplikasi kuis interaktif tebak nama dan divisi pengurus HIMA TI untuk Stand Booth GMTI 2026 — 3D card stack, audio synthesizer, leaderboard real-time, dan admin dashboard.',
+  E'<h2>Tentang Minigames Flashcard HIMA TI</h2><p>Aplikasi kuis interaktif tebak nama dan divisi pengurus Himpunan Mahasiswa Program Studi Teknik Informatika (HIMA TI) yang dirancang khusus untuk Stand Booth Ospek / Gelar Mahasiswa TI (GMTI) Mahasiswa Baru 2026.</p><h2>Fitur Utama</h2><h3>1. 3D Interactive Card Stack</h3><p>Simulasi tumpukan kartu pengurus 3D dengan gestur drag/swipe, rotasi bolak-balik (front/back flip), efek fanning tumpukan, dan auto-switch kartu berkala menggunakan Framer Motion.</p><h3>2. Gameplay Flashcard Dinamis</h3><p>Animasi 3D realistis dengan efek tilt perspektif, dynamic timer bar, smart auto-distractor (pilihan ABCD cerdas berdasarkan gender dan divisi), dan mode spill jawaban.</p><h3>3. Audio Engine Lengkap</h3><p>100% Web Audio API — 4 genre BGM synthesizer (Arcade 8-Bit, Cyberpunk Synthwave, Ambient Lofi, Stadium EDM) dan 5 profil tactile SFX tanpa file audio eksternal.</p><h3>4. Command Center Admin</h3><p>Panel terproteksi PIN untuk pengaturan permainan, manajemen pengurus (CRUD), card studio simulator, manajemen leaderboard, dan backup/restore data.</p><h3>5. Dual-Mode Architecture</h3><p>Hybrid plug-and-play: Mode Static Cloud (GitHub Pages + LocalStorage) dan Mode Local Stand Server (Node.js + SQLite) untuk 100% offline.</p><h2>Teknologi</h2><ul><li>React 19 + Vite 8</li><li>Tailwind CSS v4</li><li>Framer Motion v13</li><li>Node.js 20+ / 22+</li><li>SQLite (node:sqlite / better-sqlite3)</li><li>Express.js Backend</li><li>Web Audio API Synthesizer</li><li>GitHub Pages (CI/CD Actions)</li></ul>',
+  'web', ARRAY['React 19','Vite','Tailwind CSS','Framer Motion','Node.js','SQLite','Express.js']::text[],
+  'https://minigames.jaydev.my.id/'::text, 'https://github.com/kusjay-space/hima-ti-minigames-ultimate'::text,
+  '/images/projects/minigames/ss-mini-home.png',
+  ARRAY[
+    '/images/projects/minigames/ss-mini-home.png'
+  ]::text[],
+  'published'::text, false, 12
 )
 ) AS v(title, slug, description, content, category, tech_stack, live_url, github_url, featured_image, gallery, status, is_featured, sort_order)
 WHERE NOT EXISTS (SELECT 1 FROM projects p WHERE p.slug = v.slug);

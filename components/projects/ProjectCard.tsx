@@ -16,7 +16,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
     <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>
       <Link href={`/projects/${project.slug}`}>
         <Card className="group/card relative bg-card border-border hover:border-primary/50 transition-colors overflow-hidden h-full">
-          <div className="relative h-48 -mt-4 overflow-hidden">
+          <div className="relative aspect-[16/10] -mt-4 overflow-hidden">
             {/* ponytail: <img> biasa — next/image butuh daftar remotePatterns per domain storage */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img

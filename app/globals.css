@@ -272,6 +272,11 @@
 }
 
 /* Custom scrollbar */
+.scrollbar-thin::-webkit-scrollbar { height: 6px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: var(--card); border-radius: 999px; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 999px; }
+.scrollbar-thin::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: #06070A; }
 ::-webkit-scrollbar-thumb { background: #1C2130; border-radius: 999px; }
